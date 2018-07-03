@@ -15,7 +15,7 @@ app.get('/', function (req, res) {
     // Get all vins from Firebase
     database
         .ref('/vins')
-        .once('value', vins => {
+        .on('value', vins => {
             // Build an array of all records to push to Algolia
             const records = [];
             vins.forEach(vin => {
@@ -35,7 +35,6 @@ app.get('/', function (req, res) {
                     childData.comments = comment
                 }
                 // Add object for indexing
-                console.log(childData);
                 records.push(childData);
             });
 
@@ -51,44 +50,9 @@ app.get('/', function (req, res) {
                 });
         });
 
-    const winesRef = database.ref('/vins');
-    winesRef.on('child_added', addOrUpdateIndexRecord);
-    winesRef.on('child_changed', addOrUpdateIndexRecord);
-    winesRef.on('child_removed', deleteIndexRecord);
-
-    function addOrUpdateIndexRecord(vin) {
-        // Get Firebase object
-        const record = vin.val();
-        // Specify Algolia's objectID using the Firebase object key
-        record.objectID = vin.key;
-        // Add or update object
-        index
-            .saveObject(record)
-            .then(() => {
-                console.log('Firebase object indexed in Algolia', record.objectID);
-            })
-            .catch(error => {
-                console.error('Error when indexing vins into Algolia', error);
-                process.exit(1);
-            });
-    }
-    function deleteIndexRecord(vin) {
-        // Get Algolia's objectID from the Firebase object key
-        const objectID = vin.key;
-        // Remove the object from Algolia
-        index
-            .deleteObject(objectID)
-            .then(() => {
-                console.log('Firebase object deleted from Algolia', objectID);
-            })
-            .catch(error => {
-                console.error('Error when deleting vins from Algolia', error);
-                process.exit(1);
-            });
-    }
     res.send(true)
 });
 
-app.listen(process.env.PORT || 3000, "0.0.0.0", function () {
+app.listen(process.env.PORT || 5000, "0.0.0.0", function () {
     console.log('Your node js server is running');
 });
