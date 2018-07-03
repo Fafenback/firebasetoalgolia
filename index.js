@@ -33,6 +33,7 @@ app.get('/', function (req, res) {
                             return elt[1]
                         })
                     childData.comments = comment
+                    childData.key = childKey
                 }
                 // Add object for indexing
                 records.push(childData);
