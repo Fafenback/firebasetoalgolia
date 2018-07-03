@@ -86,7 +86,7 @@ app.get('/', function (req, res) {
                 process.exit(1);
             });
     }
-
+    res.send(true)
 });
 
 app.listen(process.env.PORT || 3000, "0.0.0.0", function () {
