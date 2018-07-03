@@ -86,9 +86,6 @@ app.get('/', function (req, res) {
                 process.exit(1);
             });
     }
-
-    res.send(true);
-
 });
 
 app.listen(process.env.PORT || 4000, function () {
