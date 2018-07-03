@@ -87,6 +87,8 @@ app.get('/', function (req, res) {
             });
     }
 
+    res.send(true);
+
 });
 
 app.listen(process.env.PORT || 4000, function () {
