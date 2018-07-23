@@ -9,7 +9,6 @@ const database = firebase.database();
 
 const algolia = algoliasearch("IYR4SOP0Q1", "d52f69e2d2f71003715d5c47e249a7aa");
 const index = algolia.initIndex("routedesvins");
-const express = require("express");
 
 // Get all vins from Firebase
 database.ref("/vins").on("value", vins => {
